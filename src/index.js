@@ -12,7 +12,7 @@ app.use(userRouter);
 app.use(taskRouter);
 
 app.get('/ping', (req, res) => {
-  res.send('pong');
+  res.send('pong pong');
 })
 
 app.listen(port, () => {
