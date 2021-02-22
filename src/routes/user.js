@@ -19,6 +19,7 @@ router.post("/users", async (req, res) => {
     const token = await user.generateAuthToken();
     res.status(201).send({ user, token });
   } catch (e) {
+    console.log(e);
     res.status(400).send({ error: e.message });
   }
 });
@@ -72,7 +73,7 @@ router.get("/users/me", auth, async (req, res) => {
   res.send(req.user);
 });
 
-router.patch("/users/:id", auth, async (req, res) => {
+router.patch("/users/me", auth, async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = ["name", "email", "password", "age"];
   const isValid = updates.every((update) => {
@@ -113,7 +114,6 @@ const upload = multer({
     fileSize: 1000000,
   },
   fileFilter(req, file, cb) {
-    console.log(file.mimetype);
     if (!file.mimetype.match(/image\/(jpeg|jpg|png|gif)$/)) {
       cb(
         new Error(
